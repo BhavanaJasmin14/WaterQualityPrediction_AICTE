@@ -26,3 +26,19 @@ if st.button("Predict Pollutants"):
     st.subheader(f"Predicted Pollutants for Station {station_id} in {year_input}:")
     for p, val in zip(pollutants, prediction):
         st.write(f"{p}: {val:.2f}")
+import zipfile
+import os
+import joblib
+import streamlit as st
+
+# Step 1: Extract the model from zip (only if not already extracted)
+if not os.path.exists("pollution_model.pkl"):
+    with zipfile.ZipFile("pollution_model.zip", 'r') as zip_ref:
+        zip_ref.extractall(".")
+
+# Step 2: Load the model
+model = joblib.load("pollution_model.pkl")
+
+# Rest of your Streamlit app code below...
+st.title("Water Quality Prediction App")
+# Add inputs and prediction code here
